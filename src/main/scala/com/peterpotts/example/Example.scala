@@ -9,10 +9,14 @@ trait Example extends
   ExampleTuple with
   ExampleCollection with
   ExampleSpecial {
-  val interpreter: Exampler ~> Id.Id
+  private[example] def nextLong(): Long
+
+  object Interpreter extends (Exampler ~> Id.Id) {
+    def apply[A](exampler: Exampler[A]): Id.Id[A] = exampler.generator(nextLong())
+  }
 
   implicit class DecoratedExample[T](example: Example[T]) {
-    def next() = example.foldMap(interpreter)
+    def next() = example.foldMap(Interpreter)
   }
 
 }
