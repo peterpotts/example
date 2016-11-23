@@ -26,6 +26,8 @@ Consider an example case class for a person entity:
 
 An example person generator can be created like this:
 
+    import com.peterpotts.RandomExample._
+
     val examplePerson =
       for {
         id <- exampleUUID
