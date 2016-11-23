@@ -24,7 +24,7 @@ Consider an example case class for a person entity:
         email: Option[String],
         friends: Seq[String])
 
-An example person generator can be created like this:
+A random example person generator can be created like this:
 
     import com.peterpotts.RandomExample._
 
