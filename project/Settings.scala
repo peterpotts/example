@@ -1,9 +1,10 @@
 import sbt._
 
 object Settings {
+  val user = "peterpotts"
   val name = "example"
-  val organization = "com.peterpotts"
-  val version = "1.0.0-SNAPSHOT"
+  val organization = "com." + user
+  val version = "1.0.0"
   val scalaVersion = "2.11.8"
   val scalaMajorVersion = scalaVersion.split('.').take(2).mkString(".")
 
