@@ -21,8 +21,8 @@ class ExamplePersonTest extends WordSpec with Matchers {
         UUID.nameUUIDFromBytes(Array.fill(16)(0.toByte)),
         name = "Mr. " + "0" * 8,
         age = 0,
-        email = None,
-        friends = List.fill(10)("0000")
+        email = Some("0" * defaultSize),
+        friends = List.fill(10)("0" * defaultSize)
       )
 
       examplePerson.next() shouldEqual trivialPerson

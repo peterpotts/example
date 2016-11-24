@@ -10,13 +10,11 @@ import scala.util.Try
 trait ExampleSpecial {
   self: ExampleMonad with ExamplePrimitive with ExampleCollection =>
 
+  val exampleBigInt: Example[BigInt] = exampleBigInt(defaultSize)
+
   def exampleBigInt(size: Int): Example[BigInt] = exampleBytes(size).map(BigInt(_))
 
   val exampleBigDecimal: Example[BigDecimal] = exampleDouble.map(BigDecimal(_))
-
-  def examplePick[T](values: IndexedSeq[T]): Example[T] = exampleInt(values.size).map(values(_))
-
-  def exampleShuffle[T](examples: Example[T]*): Example[T] = exampleInt(examples.size).flatMap(examples(_))
 
   val exampleAlphanumeric: Example[Char] = examplePick(('0' to '9') ++ ('A' to 'Z') ++ ('a' to 'z'))
 

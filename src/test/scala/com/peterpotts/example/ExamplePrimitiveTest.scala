@@ -36,7 +36,7 @@ class ExamplePrimitiveTest extends WordSpec with Matchers {
 
   "A trivial example unit" should {
     "be trivial" in {
-      exampleUnit.next() shouldEqual {{}}
+      exampleUnit.next() shouldEqual {}
     }
   }
 

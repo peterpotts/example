@@ -1,6 +1,7 @@
 package com.peterpotts.example
 
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 
 trait ExampleComposite {
@@ -17,17 +18,17 @@ trait ExampleComposite {
     for {
       condition <- exampleBoolean
       a <- exampleA
-    } yield if (condition) Some(a) else None
+    } yield if (condition) None else Some(a)
 
   def exampleTry[A](exampleA: Example[A]): Example[Try[A]] =
     for {
       condition <- exampleBoolean
       a <- exampleA
-    } yield if (condition) Success(a) else Failure(new RuntimeException)
+    } yield if (condition) Failure(new RuntimeException) else Success(a)
 
   def exampleFuture[A](exampleA: Example[A]): Example[Future[A]] =
     for {
       condition <- exampleBoolean
       a <- exampleA
-    } yield if (condition) Future.successful(a) else Future.failed(new RuntimeException)
+    } yield if (condition) Future.failed(new RuntimeException) else Future.successful(a)
 }
