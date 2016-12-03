@@ -12,12 +12,6 @@ trait ExampleCollection {
 
   def exampleShuffle[T](examples: Example[T]*): Example[T] = exampleInt(examples.size).flatMap(examples(_))
 
-  def exampleStream[A](exampleA: Example[A]): Example[Stream[A]] =
-    for {
-      head <- exampleA
-      tail <- exampleStream(exampleA)
-    } yield head #:: tail
-
   def exampleList[A](exampleA: Example[A], size: Int = defaultSize): Example[List[A]] =
     List.fill(size)(exampleA).sequence[Example, A]
 
