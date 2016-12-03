@@ -1,5 +1,6 @@
 package com.peterpotts.example
 
+import scala.annotation.tailrec
 import scala.collection.immutable.IndexedSeq
 import scala.reflect.ClassTag
 import scalaz.Scalaz._
@@ -30,7 +31,7 @@ trait ExampleCollection {
     examplePick(sizes).flatMap(size => exampleVector(exampleA, size))
 
   def exampleMap[A, B](exampleA: Example[A], exampleB: Example[B], size: Int = defaultSize): Example[Map[A, B]] =
-    List.fill(size)(exampleTuple2(exampleA, exampleB)).sequence[Example, (A, B)].map(_.toMap)
+    exampleList(exampleTuple2(exampleA, exampleB), size).map(_.toMap)
 
   def exampleMap[A, B](exampleA: Example[A], exampleB: Example[B], sizes: IndexedSeq[Int]): Example[Map[A, B]] =
     examplePick(sizes).flatMap(size => exampleMap(exampleA, exampleB, size))

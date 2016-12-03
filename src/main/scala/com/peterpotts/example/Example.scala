@@ -16,7 +16,7 @@ trait Example extends
   }
 
   implicit class DecoratedExample[T](example: Example[T]) {
-    def next() = example.foldMap(Interpreter)
+    def next(): T = example.foldMapRec(Interpreter)
   }
 
 }
