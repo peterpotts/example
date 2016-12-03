@@ -20,6 +20,10 @@ class ExampleCollectionTest extends WordSpec with Matchers {
     "be trivial" in {
       exampleList(exampleLong).next() shouldEqual List.fill(defaultSize)(0L)
     }
+
+    "not blow the stack" in {
+      exampleList(exampleLong, 10000).next()
+    }
   }
 
   "A trivial example array" should {

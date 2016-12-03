@@ -4,7 +4,7 @@ object Settings {
   val user = "peterpotts"
   val name = "example"
   val organization = "com." + user
-  val version = "1.0.0"
+  val version = "1.0.1-SNAPSHOT"
   val scalaVersion = "2.11.8"
   val scalaMajorVersion = scalaVersion.split('.').take(2).mkString(".")
 
