@@ -11,12 +11,12 @@ trait Example extends
   ExampleSpecial {
   private[example] def nextLong(): Long
 
-  object Interpreter extends (Exampler ~> Id.Id) {
+  implicit object Interpreter extends (Exampler ~> Id.Id) {
     def apply[A](exampler: Exampler[A]): Id.Id[A] = exampler.generator(nextLong())
   }
 
   implicit class DecoratedExample[T](example: Example[T]) {
-    def next(): T = example.foldMapRec(Interpreter)
+    def next(): T = example.foldMapRec[Id.Id](Interpreter)
   }
 
 }

@@ -8,7 +8,7 @@ trait ExampleMonad {
 
   type Example[T] = Free[Exampler, T]
 
-  implicit val exampleFunctor: Functor[Exampler] = new Functor[Exampler] {
+  implicit val examplerFunctor: Functor[Exampler] = new Functor[Exampler] {
     def map[A, B](exampler: Exampler[A])(f: A => B): Exampler[B] = Exampler(seed => f(exampler.generator(seed)))
   }
 

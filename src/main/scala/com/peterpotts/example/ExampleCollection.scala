@@ -1,16 +1,23 @@
 package com.peterpotts.example
 
-import scala.annotation.tailrec
 import scala.collection.immutable.IndexedSeq
 import scala.reflect.ClassTag
+import scalaz.Free.Trampoline
 import scalaz.Scalaz._
+import scalaz._
 
 trait ExampleCollection {
   self: ExampleMonad with ExamplePrimitive with ExampleTuple =>
 
-  def examplePick[T](values: IndexedSeq[T]): Example[T] = exampleInt(values.size).map(values(_))
+  def examplePick[A](values: IndexedSeq[A]): Example[A] = exampleInt(values.size).map(values(_))
 
-  def exampleShuffle[T](examples: Example[T]*): Example[T] = exampleInt(examples.size).flatMap(examples(_))
+  def exampleShuffle[A](examples: Example[A]*): Example[A] = exampleInt(examples.size).flatMap(examples(_))
+
+  def exampleTrampoline[A](exampleA: Example[A])(implicit interpreter: Exampler ~> Id.Id): Example[Trampoline[A]] =
+    Example(_ => Trampoline.delay(exampleA.foldMapRec[Id.Id](interpreter)))
+
+  def exampleStream[A](exampleA: Example[A])(implicit interpreter: Exampler ~> Id.Id): Example[Stream[A]] =
+    Example(_ => Stream.continually(exampleA.foldMapRec[Id.Id](interpreter)))
 
   def exampleList[A](exampleA: Example[A], size: Int = defaultSize): Example[List[A]] =
     List.fill(size)(exampleA).sequence[Example, A]
