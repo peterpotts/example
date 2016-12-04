@@ -2,7 +2,6 @@ package com.peterpotts.example
 
 import scala.collection.immutable.IndexedSeq
 import scala.reflect.ClassTag
-import scalaz.Free.Trampoline
 import scalaz.Scalaz._
 import scalaz._
 
@@ -12,9 +11,6 @@ trait ExampleCollection {
   def examplePick[A](values: IndexedSeq[A]): Example[A] = exampleInt(values.size).map(values(_))
 
   def exampleShuffle[A](examples: Example[A]*): Example[A] = exampleInt(examples.size).flatMap(examples(_))
-
-  def exampleTrampoline[A](exampleA: Example[A])(implicit interpreter: Exampler ~> Id.Id): Example[Trampoline[A]] =
-    Example(_ => Trampoline.delay(exampleA.foldMapRec[Id.Id](interpreter)))
 
   def exampleStream[A](exampleA: Example[A])(implicit interpreter: Exampler ~> Id.Id): Example[Stream[A]] =
     Example(_ => Stream.continually(exampleA.foldMapRec[Id.Id](interpreter)))

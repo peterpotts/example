@@ -16,14 +16,6 @@ class ExampleCollectionTest extends WordSpec with Matchers {
     }
   }
 
-  "A trivial example trampoline" should {
-    "be trivial" in {
-      val example = Example[Boolean](_ => throw new RuntimeException)
-      val trampoline = exampleTrampoline(exampleList(example)).next()
-      intercept[RuntimeException](trampoline.run)
-    }
-  }
-
   "A trivial example stream" should {
     "be trivial" in {
       exampleStream(exampleBoolean).next().head shouldEqual false

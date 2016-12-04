@@ -29,4 +29,12 @@ class ExampleCompositeTest extends WordSpec with Matchers {
       exampleFuture(exampleDouble).next().value shouldEqual Some(Success(0.0))
     }
   }
+
+  "A trivial example trampoline" should {
+    "be trivial" in {
+      val example = Example[Boolean](_ => throw new RuntimeException)
+      val trampoline = exampleTrampoline(exampleList(example)).next()
+      intercept[RuntimeException](trampoline.run)
+    }
+  }
 }

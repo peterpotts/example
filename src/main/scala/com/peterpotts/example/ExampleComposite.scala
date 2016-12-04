@@ -1,8 +1,9 @@
 package com.peterpotts.example
 
 import scala.concurrent.Future
-import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
+import scalaz.Free.Trampoline
+import scalaz._
 
 trait ExampleComposite {
   self: ExampleMonad with ExamplePrimitive =>
@@ -31,4 +32,7 @@ trait ExampleComposite {
       condition <- exampleBoolean
       a <- exampleA
     } yield if (condition) Future.failed(new RuntimeException) else Future.successful(a)
+
+  def exampleTrampoline[A](exampleA: Example[A])(implicit interpreter: Exampler ~> Id.Id): Example[Trampoline[A]] =
+    Example(_ => Trampoline.delay(exampleA.foldMapRec[Id.Id](interpreter)))
 }
