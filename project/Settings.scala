@@ -3,10 +3,10 @@ import sbt._
 object Settings {
   val user = "peterpotts"
   val name = "example"
-  val organization = "com." + user
-  val version = "1.0.1"
+  val organization: String = "com." + user
+  val version = "1.0.2"
   val scalaVersion = "2.11.8"
-  val scalaMajorVersion = scalaVersion.split('.').take(2).mkString(".")
+  val scalaMajorVersion: String = scalaVersion.split('.').take(2).mkString(".")
 
   object Versions {
     val scalaz = "7.2.7"
@@ -15,10 +15,10 @@ object Settings {
   }
 
   object Dependencies {
-    val scalaCompiler = "org.scala-lang" % "scala-compiler" % scalaVersion
-    val scalaz = "org.scalaz" %% "scalaz-core" % Versions.scalaz
-    val scalaTest = "org.scalatest" %% "scalatest" % Versions.scalaTest
-    val mockitoCore = "org.mockito" % "mockito-core" % Versions.mockito
+    val scalaCompiler: ModuleID = "org.scala-lang" % "scala-compiler" % scalaVersion
+    val scalaz: ModuleID = "org.scalaz" %% "scalaz-core" % Versions.scalaz
+    val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % Versions.scalaTest
+    val mockitoCore: ModuleID = "org.mockito" % "mockito-core" % Versions.mockito
   }
 
 }
